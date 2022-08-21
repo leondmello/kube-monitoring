@@ -21,8 +21,8 @@ spec:
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
-          ports:
-            - containerPort: 9090
+            - "--web.external-url=https://greystar/prometheus"
+            - "--web.route-prefix=/"
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/
