@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rnb
+  namespace: default
+spec:
+  ports:
+    - name: tcp-80-5000-2tx5j
+      protocol: TCP
+      port: 80
+      targetPort: 5000
+  selector:
+    k8s-app: rnb
