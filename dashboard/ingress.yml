@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8-ui
+  namespace: kube-system
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - greystar
+    secretName: rnb-greystar-ingress-tls
+  rules:
+  - host: greystar
+    http:
+      paths:
+      - path: /(?!prometheus|grafana)
+        pathType: Prefix
+        backend:
+          service:
+            name: kubernetes-dashboard
+            port:
+              number: 443
