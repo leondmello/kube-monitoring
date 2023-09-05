@@ -2,7 +2,7 @@ agent:
   configMap:
     content: |-
         discovery.kubernetes "pods" { 
-          role = pod
+          role = "pod"
         }
 
         loki.source.kubernetes "pods" {
