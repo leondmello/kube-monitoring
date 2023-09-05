@@ -6,7 +6,7 @@ agent:
         }
 
         loki.source.kubernetes "pods" {
-          targets = discovery.kubernetes.pods.target
+          targets = discovery.kubernetes.pods.targets
           forward_to = [loki.write.default.receiver]
         }
 
