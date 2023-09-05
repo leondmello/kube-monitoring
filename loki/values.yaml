@@ -6,13 +6,13 @@ loki:
   auth_enabled: false
 singleBinary:
   replicas: 1
-monitoring:
-  dashboards:
-    enabled: false
-  selfMonitoring:
-    enabled: true
-    grafanaAgent:
-      installOperator: false
-    lokiCanary:
-      enabled: false
+#monitoring:
+#  dashboards:
+#    enabled: false
+#  selfMonitoring:
+#    enabled: true
+#    grafanaAgent:
+#      installOperator: false
+#    lokiCanary:
+#      enabled: false
 

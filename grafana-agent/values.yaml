@@ -1,0 +1,33 @@
+controller:
+  volumes:
+    extra:
+      - name: dockercontainers
+        hostPath:
+          path: /var/log/pods
+agent:
+  mounts:
+    extra:
+      - name: dockercontainers
+        mountPath: /var/lib/docker/containers
+        readOnly: true
+  configMap:
+    content: |-
+        local.file_match "example" {
+		path_targets = [{
+			__address__ = "localhost",
+			__path__    = "/var/lib/docker/containers/*.log",
+		}]
+	}
+
+	loki.source.file "example" {
+		targets    = local.file_match.example.targets
+		forward_to = [loki.write.default.receiver]
+	}
+
+	loki.write "default" {
+		endpoint {
+			url = "http://loki-gateway.loki.svc.cluster.local/api/v1/push"
+		}
+		external_labels = {}
+	}
+
