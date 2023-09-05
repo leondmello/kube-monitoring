@@ -12,22 +12,22 @@ agent:
         readOnly: true
   configMap:
     content: |-
-		    local.file_match "example" {
-					path_targets = [{
-						__address__ = "localhost",
-						__path__ = "/var/lib/docker/containers/*.log",
-					}]
-				}
+        local.file_match "example" {
+          path_targets = [{
+            __address__ = "localhost",
+            __path__ = "/var/lib/docker/containers/*.log",
+          }]
+        }
 
-				loki.source.file "example" {
-					targets = local.file_match.example.targets
-					forward_to = [loki.write.default.receiver]
-				}
+        loki.source.file "example" {
+          targets = local.file_match.example.targets
+          forward_to = [loki.write.default.receiver]
+        }
 
-				loki.write "default" {
-					endpoint {
-						url = "http://loki-gateway.loki.svc.cluster.local/api/v1/push"
-					}
-					external_labels = {}
-				}
+        loki.write "default" {
+          endpoint {
+            url = "http://loki-gateway.loki.svc.cluster.local/api/v1/push"
+          }
+          external_labels = {}
+        }
 
