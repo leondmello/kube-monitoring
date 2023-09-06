@@ -1,21 +1,31 @@
 agent:
   configMap:
     content: |-
-        discovery.kubernetes "pods" { 
+        discovery.kubernetes "rnb" { 
           role = "pod"
 
           selectors {
             role = "pod"
             label = "name=rnb"
           }
+        }
 
-          namespaces {
-            names = ["default"]
+        discovery.kubernetes "postgres" { 
+          role = "pod"
+
+          selectors {
+            role = "pod"
+            label = "k8-app=postgres"
           }
         }
 
-        loki.source.kubernetes "pods" {
-          targets = discovery.kubernetes.pods.targets
+        loki.source.kubernetes "rnb" {
+          targets = discovery.kubernetes.rnb.targets
+          forward_to = [loki.write.default.receiver]
+        }
+
+        loki.source.kubernetes "postgres" {
+          targets = discovery.kubernetes.postgres.targets
           forward_to = [loki.write.default.receiver]
         }
 
